@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SkillSync | LPU Skill & Opportunity Matcher</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-slate-50 font-sans text-slate-800">
+  <nav class="bg-indigo-600 text-white shadow-md">
+    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+      <h1 class="text-2xl font-bold">SkillSync <span class="text-sm font-normal text-indigo-200">@ LPU</span></h1>
+      <div class="space-x-4">
+        <button onclick="switchTab('talents')" class="font-medium hover:underline">Find Talent</button>
+        <button onclick="switchTab('projects')" class="font-medium hover:underline">Find Projects</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="mx-auto max-w-6xl px-4 py-8">
+    <div class="mb-8 flex flex-col items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:flex-row">
+      <div class="w-full md:w-1/2">
+        <label for="searchInput" class="mb-1 block text-xs font-semibold uppercase text-slate-500">Search by skill or keyword</label>
+        <input id="searchInput" type="text" oninput="filterData()" placeholder="Python, React, UI/UX..." class="w-full rounded-lg border border-slate-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+      </div>
+      <div class="flex w-full gap-3 md:w-auto">
+        <button onclick="openModal('profileModal')" class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700">+ Create Profile</button>
+        <button onclick="openModal('projectModal')" class="rounded-lg bg-slate-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-900">+ Post Project</button>
+      </div>
+    </div>
+
+    <section id="talentsSection">
+      <h2 class="mb-4 text-xl font-bold">Student & Contributor Directory</h2>
+      <div id="talentList" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+    </section>
+    <section id="projectsSection" class="hidden">
+      <h2 class="mb-4 text-xl font-bold">Open Opportunities & Hackathon Teams</h2>
+      <div id="projectList" class="grid grid-cols-1 gap-6 md:grid-cols-2"></div>
+    </section>
+  </main>
+
+  <div id="profileModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 p-4">
+    <div class="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+      <h3 class="mb-4 text-xl font-bold">Create Your Talent Profile</h3>
+      <form onsubmit="saveProfile(event)" class="space-y-4">
+        <input id="pName" required placeholder="Full name" class="w-full rounded-lg border p-2 text-sm">
+        <input id="pRole" required placeholder="Role / specialization" class="w-full rounded-lg border p-2 text-sm">
+        <input id="pSkills" required placeholder="Skills, separated by commas" class="w-full rounded-lg border p-2 text-sm">
+        <input id="pContact" required placeholder="Email or phone" class="w-full rounded-lg border p-2 text-sm">
+        <textarea id="pBio" rows="3" placeholder="Bio / looking for" class="w-full rounded-lg border p-2 text-sm"></textarea>
+        <div class="flex justify-end gap-2"><button type="button" onclick="closeModal('profileModal')" class="rounded-lg border px-4 py-2 text-sm">Cancel</button><button class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white">Save Profile</button></div>
+      </form>
+    </div>
+  </div>
+
+  <div id="projectModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 p-4">
+    <div class="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
+      <h3 class="mb-4 text-xl font-bold">Post a Project Opportunity</h3>
+      <form onsubmit="saveProject(event)" class="space-y-4">
+        <input id="pjTitle" required placeholder="Project title" class="w-full rounded-lg border p-2 text-sm">
+        <input id="pjSkills" required placeholder="Required skills, separated by commas" class="w-full rounded-lg border p-2 text-sm">
+        <input id="pjContact" required placeholder="Email or Telegram" class="w-full rounded-lg border p-2 text-sm">
+        <textarea id="pjDesc" rows="3" placeholder="Project description" class="w-full rounded-lg border p-2 text-sm"></textarea>
+        <div class="flex justify-end gap-2"><button type="button" onclick="closeModal('projectModal')" class="rounded-lg border px-4 py-2 text-sm">Cancel</button><button class="rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white">Post Opportunity</button></div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let profiles = [];
+    let projects = [];
+
+    const esc = value => String(value || '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
+    const card = (title, subtitle, text, skills, contact, button, color) => `
+      <article class="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+        <div><h3 class="text-lg font-bold">${esc(title)}</h3><p class="mb-2 text-xs font-semibold ${color}">${esc(subtitle)}</p><p class="mb-4 text-sm text-slate-600">${esc(text)}</p><div class="mb-4 flex flex-wrap gap-1.5">${skills.map(skill => `<span class="rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700">${esc(skill.trim())}</span>`).join('')}</div></div>
+        <a href="mailto:${encodeURIComponent(contact)}" class="w-full rounded-lg bg-slate-100 py-2 text-center text-sm font-medium hover:bg-slate-200">${esc(button)}</a>
+      </article>`;
+
+    function renderData(profileRows = profiles, projectRows = projects) {
+      document.getElementById('talentList').innerHTML = profileRows.length ? profileRows.map(p => card(p.name, p.role, p.bio, p.skills, p.contact, `Connect: ${p.contact}`, 'text-indigo-600')).join('') : '<p class="text-slate-500">No profiles yet.</p>';
+      document.getElementById('projectList').innerHTML = projectRows.length ? projectRows.map(p => card(p.title, 'Open opportunity', p.desc, p.skills, p.contact, 'Apply / Contact Lead', 'text-emerald-600')).join('') : '<p class="text-slate-500">No projects yet.</p>';
+    }
+
+    async function loadData() {
+      const [profileResponse, projectResponse] = await Promise.all([fetch('/api/profiles'), fetch('/api/projects')]);
+      profiles = await profileResponse.json();
+      projects = await projectResponse.json();
+      renderData();
+    }
+
+    async function saveProfile(event) {
+      event.preventDefault();
+      const data = { name: pName.value, role: pRole.value, skills: pSkills.value.split(',').map(s => s.trim()).filter(Boolean), contact: pContact.value, bio: pBio.value };
+      const response = await fetch('/api/profiles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      if (!response.ok) return alert((await response.json()).error);
+      event.target.reset(); closeModal('profileModal'); await loadData();
+    }
+
+    async function saveProject(event) {
+      event.preventDefault();
+      const data = { title: pjTitle.value, skills: pjSkills.value.split(',').map(s => s.trim()).filter(Boolean), contact: pjContact.value, desc: pjDesc.value };
+      const response = await fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+      if (!response.ok) return alert((await response.json()).error);
+      event.target.reset(); closeModal('projectModal'); await loadData();
+    }
+
+    function filterData() {
+      const query = searchInput.value.toLowerCase();
+      renderData(profiles.filter(p => [p.name, p.role, ...p.skills].some(value => value.toLowerCase().includes(query))), projects.filter(p => [p.title, ...p.skills].some(value => value.toLowerCase().includes(query))));
+    }
+    function switchTab(tab) { talentsSection.classList.toggle('hidden', tab !== 'talents'); projectsSection.classList.toggle('hidden', tab !== 'projects'); }
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
+    loadData().catch(() => alert('Could not connect to the local server. Run npm start first.'));
+  </script>
+</body>
+</html>
