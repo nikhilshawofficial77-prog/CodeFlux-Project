@@ -3,65 +3,152 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SkillSync | LPU Skill & Opportunity Matcher</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>SkillSync | Dashboard</title>
 </head>
-<body class="min-h-screen bg-slate-50 font-sans text-slate-800">
-  <nav class="bg-indigo-600 text-white shadow-md">
-    <div class="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-      <h1 class="text-2xl font-bold">SkillSync <span class="text-sm font-normal text-indigo-200">@ LPU</span></h1>
-      <div class="space-x-4">
-        <button onclick="switchTab('talents')" class="font-medium hover:underline">Find Talent</button>
-        <button onclick="switchTab('projects')" class="font-medium hover:underline">Find Projects</button>
+
+<body style="min-height:100vh;margin:0;background:#f8fafc;color:#1e293b;font-family:Arial,Helvetica,sans-serif;">
+  <div style="height:6px;background:#4f46e5;"></div>
+
+  <nav style="background:#ffffff;border-bottom:1px solid #e2e8f0;box-shadow:0 3px 10px rgba(15,23,42,.08);">
+    <div style="max-width:1152px;margin:0 auto;padding:16px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:12px;">
+
+        <div>
+          <h1 style="margin:0;color:#1e293b;font-size:25px;letter-spacing:.5px;">
+            Skill<span style="color:#4f46e5;">Sync</span>
+          </h1>
+
+          <p style="margin:2px 0 0;color:#64748b;font-size:11px;font-weight:bold;letter-spacing:1.4px;text-transform:uppercase;">
+            Connect • Collaborate • Create
+          </p>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:9px;flex-wrap:wrap;">
+        <button onclick="switchTab('talents')" style="border:1px solid #c7d2fe;border-radius:20px;background:#eef2ff;color:#4338ca;padding:8px 13px;font-size:13px;font-weight:bold;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#4f46e5';this.style.color='white';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#eef2ff';this.style.color='#4338ca';this.style.transform='translateY(0)'">
+          ⌕ Find Talent
+        </button>
+
+        <button onclick="switchTab('projects')" style="border:1px solid #bae6fd;border-radius:20px;background:#f0f9ff;color:#0369a1;padding:8px 13px;font-size:13px;font-weight:bold;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#0284c7';this.style.color='white';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#f0f9ff';this.style.color='#0369a1';this.style.transform='translateY(0)'">
+          🚀 Find Projects
+        </button>
+
+        <button onclick="logout()" style="border:1px solid #cbd5e1;border-radius:20px;background:white;color:#475569;padding:8px 13px;font-size:13px;font-weight:bold;cursor:pointer;transition:.2s;" onmouseover="this.style.background='#f1f5f9'" onmouseout="this.style.background='white'">
+          Log out
+        </button>
       </div>
     </div>
   </nav>
 
-  <main class="mx-auto max-w-6xl px-4 py-8">
-    <div class="mb-8 flex flex-col items-center justify-between gap-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm md:flex-row">
-      <div class="w-full md:w-1/2">
-        <label for="searchInput" class="mb-1 block text-xs font-semibold uppercase text-slate-500">Search by skill or keyword</label>
-        <input id="searchInput" type="text" oninput="filterData()" placeholder="Python, React, UI/UX..." class="w-full rounded-lg border border-slate-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-      </div>
-      <div class="flex w-full gap-3 md:w-auto">
-        <button onclick="openModal('profileModal')" class="rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-indigo-700">+ Create Profile</button>
-        <button onclick="openModal('projectModal')" class="rounded-lg bg-slate-800 px-5 py-2.5 text-sm font-medium text-white hover:bg-slate-900">+ Post Project</button>
+  <main style="max-width:1152px;margin:0 auto;padding:36px 16px 54px;">
+    <div style="margin-bottom:28px;padding:26px;background:#ffffff;border:1px solid #e2e8f0;border-radius:18px;box-shadow:0 8px 20px rgba(15,23,42,.08);">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:22px;flex-wrap:wrap;">
+        <div style="flex:1 1 340px;min-width:0;">
+          <p style="margin:0 0 6px;color:#4f46e5;font-size:11px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">
+            Discover your next collaboration
+          </p>
+
+          <label for="searchInput" style="display:block;margin-bottom:8px;color:#334155;font-size:13px;font-weight:bold;">
+            Search by skill or keyword
+          </label>
+
+          <!-- Search bar kept, but it no longer filters anything -->
+          <input id="searchInput" type="text" placeholder="Python, React, UI/UX..." style="width:100%;padding:13px 15px;border:2px solid #cbd5e1;border-radius:12px;outline:none;background:#ffffff;color:#1e293b;font-size:14px;box-sizing:border-box;transition:.2s;" onfocus="this.style.borderColor='#4f46e5';this.style.boxShadow='0 0 0 3px rgba(79,70,229,.14)'" onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none'">
+        </div>
+
+        <div style="display:flex;gap:10px;flex-wrap:wrap;align-self:flex-end;">
+          <button onclick="openModal('profileModal')" style="border:none;border-radius:12px;background:#7c3aed;color:white;padding:12px 17px;font-size:14px;font-weight:bold;cursor:pointer;box-shadow:0 6px 15px rgba(124,58,237,.35);transition:.2s;" onmouseover="this.style.background='#6d28d9';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#7c3aed';this.style.transform='translateY(0)'">
+            Create Profile
+          </button>
+
+          <button onclick="openModal('projectModal')" style="border:1px solid #0ea5e9;border-radius:12px;background:#0284c7;color:white;padding:12px 17px;font-size:14px;font-weight:bold;cursor:pointer;box-shadow:0 6px 15px rgba(14,116,144,.22);transition:.2s;" onmouseover="this.style.background='#0369a1';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='#0284c7';this.style.transform='translateY(0)'">
+            ＋ Post Project
+          </button>
+        </div>
       </div>
     </div>
 
     <section id="talentsSection">
-      <h2 class="mb-4 text-xl font-bold">Student & Contributor Directory</h2>
-      <div id="talentList" class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"></div>
+      <div style="display:flex;align-items:center;gap:11px;margin:0 0 17px;">
+        <div style="width:9px;height:31px;border-radius:9px;background:#8b5cf6;box-shadow:0 0 13px #8b5cf6;"></div>
+
+        <div>
+          <p style="margin:0;color:#64748b;font-size:11px;font-weight:bold;letter-spacing:1.7px;text-transform:uppercase;">Community</p>
+          <h2 style="margin:2px 0 0;font-size:22px;color:#1e293b;">Student &amp; Contributor Directory</h2>
+        </div>
+      </div>
+
+      <div id="talentList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;"></div>
     </section>
-    <section id="projectsSection" class="hidden">
-      <h2 class="mb-4 text-xl font-bold">Open Opportunities & Hackathon Teams</h2>
-      <div id="projectList" class="grid grid-cols-1 gap-6 md:grid-cols-2"></div>
+
+    <section id="projectsSection" style="display:none;">
+      <div style="display:flex;align-items:center;gap:11px;margin:0 0 17px;">
+        <div style="width:9px;height:31px;border-radius:9px;background:#38bdf8;box-shadow:0 0 13px #38bdf8;"></div>
+
+        <div>
+          <p style="margin:0;color:#64748b;font-size:11px;font-weight:bold;letter-spacing:1.7px;text-transform:uppercase;">Build together</p>
+          <h2 style="margin:2px 0 0;font-size:22px;color:#1e293b;">Open Opportunities &amp; Hackathon Teams</h2>
+        </div>
+      </div>
+
+      <div id="projectList" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;"></div>
     </section>
   </main>
 
-  <div id="profileModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 p-4">
-    <div class="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
-      <h3 class="mb-4 text-xl font-bold">Create Your Talent Profile</h3>
-      <form onsubmit="saveProfile(event)" class="space-y-4">
-        <input id="pName" required placeholder="Full name" class="w-full rounded-lg border p-2 text-sm">
-        <input id="pRole" required placeholder="Role / specialization" class="w-full rounded-lg border p-2 text-sm">
-        <input id="pSkills" required placeholder="Skills, separated by commas" class="w-full rounded-lg border p-2 text-sm">
-        <input id="pContact" required placeholder="Email or phone" class="w-full rounded-lg border p-2 text-sm">
-        <textarea id="pBio" rows="3" placeholder="Bio / looking for" class="w-full rounded-lg border p-2 text-sm"></textarea>
-        <div class="flex justify-end gap-2"><button type="button" onclick="closeModal('profileModal')" class="rounded-lg border px-4 py-2 text-sm">Cancel</button><button class="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white">Save Profile</button></div>
+  <div id="profileModal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(15,23,42,.45);backdrop-filter:blur(3px);padding:16px;z-index:1000;">
+    <div style="width:100%;max-width:470px;background:#ffffff;border:1px solid #c7d2fe;border-radius:18px;padding:27px;box-shadow:0 24px 55px rgba(15,23,42,.25);box-sizing:border-box;">
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:18px;">
+        <div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#eef2ff;font-size:18px;">✦</div>
+
+        <div>
+          <h3 style="margin:0;color:#1e293b;font-size:21px;">Create Your Talent Profile</h3>
+          <p style="margin:3px 0 0;color:#6366f1;font-size:12px;">Let collaborators discover what you do best.</p>
+        </div>
+      </div>
+
+      <form onsubmit="saveProfile(event)" style="display:flex;flex-direction:column;gap:13px;">
+        <input id="pName" required placeholder="Full name" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;outline:none;background:#ffffff;color:#1e293b;font-size:14px;box-sizing:border-box;" onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#cbd5e1'">
+
+        <input id="pRole" required placeholder="Role / specialization" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;outline:none;background:#ffffff;color:#1e293b;font-size:14px;box-sizing:border-box;" onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#cbd5e1'">
+
+        <input id="pSkills" required placeholder="Skills, separated by commas" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;outline:none;background:#ffffff;color:#1e293b;font-size:14px;box-sizing:border-box;" onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#cbd5e1'">
+
+        <input id="pContact" required placeholder="Email or phone" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;outline:none;background:#ffffff;color:#1e293b;font-size:14px;box-sizing:border-box;" onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#cbd5e1'">
+
+        <textarea id="pBio" rows="3" placeholder="Bio / looking for" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;outline:none;background:#ffffff;color:#1e293b;font-family:Arial,Helvetica,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box;" onfocus="this.style.borderColor='#4f46e5'" onblur="this.style.borderColor='#cbd5e1'"></textarea>
+
+        <div style="display:flex;justify-content:flex-end;gap:9px;margin-top:4px;">
+          <button type="button" onclick="closeModal('profileModal')" style="border:1px solid #cbd5e1;border-radius:10px;background:#ffffff;color:#475569;padding:10px 15px;font-size:14px;cursor:pointer;">Cancel</button>
+          <button type="submit" style="border:none;border-radius:10px;background:#4f46e5;color:white;padding:10px 15px;font-size:14px;font-weight:bold;cursor:pointer;">Save Profile</button>
+        </div>
       </form>
     </div>
   </div>
 
-  <div id="projectModal" class="fixed inset-0 hidden items-center justify-center bg-black/50 p-4">
-    <div class="w-full max-w-md rounded-xl bg-white p-6 shadow-xl">
-      <h3 class="mb-4 text-xl font-bold">Post a Project Opportunity</h3>
-      <form onsubmit="saveProject(event)" class="space-y-4">
-        <input id="pjTitle" required placeholder="Project title" class="w-full rounded-lg border p-2 text-sm">
-        <input id="pjSkills" required placeholder="Required skills, separated by commas" class="w-full rounded-lg border p-2 text-sm">
-        <input id="pjContact" required placeholder="Email or Telegram" class="w-full rounded-lg border p-2 text-sm">
-        <textarea id="pjDesc" rows="3" placeholder="Project description" class="w-full rounded-lg border p-2 text-sm"></textarea>
-        <div class="flex justify-end gap-2"><button type="button" onclick="closeModal('projectModal')" class="rounded-lg border px-4 py-2 text-sm">Cancel</button><button class="rounded-lg bg-slate-800 px-4 py-2 text-sm font-medium text-white">Post Opportunity</button></div>
+  <div id="projectModal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(15,23,42,.45);backdrop-filter:blur(3px);padding:16px;z-index:1000;">
+    <div style="width:100%;max-width:470px;background:#ffffff;border:1px solid #bae6fd;border-radius:18px;padding:27px;box-shadow:0 24px 55px rgba(15,23,42,.25);box-sizing:border-box;">
+      <div style="display:flex;align-items:center;gap:11px;margin-bottom:18px;">
+        <div style="width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:12px;background:#e0f2fe;font-size:18px;">🚀</div>
+
+        <div>
+          <h3 style="margin:0;color:#1e293b;font-size:21px;">Post a Project Opportunity</h3>
+          <p style="margin:3px 0 0;color:#0284c7;font-size:12px;">Find the people who will make it happen.</p>
+        </div>
+      </div>
+
+      <form onsubmit="saveProject(event)" style="display:flex;flex-direction:column;gap:13px;">
+        <input id="pjTitle" required placeholder="Project title" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;outline:none;background:#ffffff;color:#1e293b;font-size:14px;box-sizing:border-box;" onfocus="this.style.borderColor='#0284c7'" onblur="this.style.borderColor='#cbd5e1'">
+
+        <input id="pjSkills" required placeholder="Required skills, separated by commas" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;outline:none;background:#ffffff;color:#1e293b;font-size:14px;box-sizing:border-box;" onfocus="this.style.borderColor='#0284c7'" onblur="this.style.borderColor='#cbd5e1'">
+
+        <input id="pjContact" required placeholder="Email or Telegram" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;outline:none;background:#ffffff;color:#1e293b;font-size:14px;box-sizing:border-box;" onfocus="this.style.borderColor='#0284c7'" onblur="this.style.borderColor='#cbd5e1'">
+
+        <textarea id="pjDesc" rows="3" placeholder="Project description" style="width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;outline:none;background:#ffffff;color:#1e293b;font-family:Arial,Helvetica,sans-serif;font-size:14px;resize:vertical;box-sizing:border-box;" onfocus="this.style.borderColor='#0284c7'" onblur="this.style.borderColor='#cbd5e1'"></textarea>
+
+        <div style="display:flex;justify-content:flex-end;gap:9px;margin-top:4px;">
+          <button type="button" onclick="closeModal('projectModal')" style="border:1px solid #cbd5e1;border-radius:10px;background:#ffffff;color:#475569;padding:10px 15px;font-size:14px;cursor:pointer;">Cancel</button>
+          <button type="submit" style="border:none;border-radius:10px;background:#0284c7;color:white;padding:10px 15px;font-size:14px;font-weight:bold;cursor:pointer;">Post Opportunity</button>
+        </div>
       </form>
     </div>
   </div>
@@ -70,49 +157,193 @@
     let profiles = [];
     let projects = [];
 
-    const esc = value => String(value || '').replace(/[&<>'"]/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
-    const card = (title, subtitle, text, skills, contact, button, color) => `
-      <article class="flex flex-col justify-between rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-        <div><h3 class="text-lg font-bold">${esc(title)}</h3><p class="mb-2 text-xs font-semibold ${color}">${esc(subtitle)}</p><p class="mb-4 text-sm text-slate-600">${esc(text)}</p><div class="mb-4 flex flex-wrap gap-1.5">${skills.map(skill => `<span class="rounded-md bg-indigo-50 px-2 py-1 text-xs font-medium text-indigo-700">${esc(skill.trim())}</span>`).join('')}</div></div>
-        <a href="mailto:${encodeURIComponent(contact)}" class="w-full rounded-lg bg-slate-100 py-2 text-center text-sm font-medium hover:bg-slate-200">${esc(button)}</a>
-      </article>`;
+    const esc = value =>
+      String(value || "").replace(/[&<>'"]/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "'": "&#39;",
+        '"': "&quot;"
+      })[character]);
+
+    function createCard(title, subtitle, text, skills, contact, buttonText, color) {
+      const accent = color === "text-emerald-600" ? "#0284c7" : "#4f46e5";
+
+      return `
+        <article
+          style="display:flex;flex-direction:column;justify-content:space-between;min-height:220px;background:#ffffff;border:1px solid #e2e8f0;border-radius:14px;padding:21px;box-shadow:0 4px 12px rgba(15,23,42,.08);transition:.2s;"
+          onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='${accent}';this.style.boxShadow='0 10px 22px rgba(15,23,42,.13)'"
+          onmouseout="this.style.transform='translateY(0)';this.style.borderColor='#e2e8f0';this.style.boxShadow='0 4px 12px rgba(15,23,42,.08)'"
+        >
+          <div>
+            <div style="width:33px;height:4px;border-radius:5px;background:${accent};margin-bottom:15px;"></div>
+
+            <h3 style="margin:0;color:#1e293b;font-size:19px;line-height:1.35;">
+              ${esc(title)}
+            </h3>
+
+            <p style="margin:5px 0 11px;color:${accent};font-size:12px;font-weight:bold;letter-spacing:.5px;text-transform:uppercase;">
+              ${esc(subtitle)}
+            </p>
+
+            <p style="margin:0 0 16px;color:#475569;font-size:14px;line-height:1.55;">
+              ${esc(text)}
+            </p>
+
+            <div style="margin-bottom:18px;display:flex;flex-wrap:wrap;gap:7px;">
+              ${skills.map(skill => `
+                <span style="display:inline-block;padding:5px 9px;border:1px solid #c7d2fe;border-radius:15px;background:#eef2ff;color:#4338ca;font-size:12px;font-weight:bold;">
+                  ${esc(skill.trim())}
+                </span>
+              `).join("")}
+            </div>
+          </div>
+
+          <a
+            href="mailto:${encodeURIComponent(contact)}"
+            style="display:block;width:100%;padding:10px 0;border:1px solid ${accent};border-radius:10px;background:#ffffff;color:${accent};text-align:center;text-decoration:none;font-size:13px;font-weight:bold;box-sizing:border-box;transition:.2s;"
+            onmouseover="this.style.background='${accent}';this.style.color='white'"
+            onmouseout="this.style.background='#ffffff';this.style.color='${accent}'"
+          >
+            ${esc(buttonText)}
+          </a>
+        </article>
+      `;
+    }
 
     function renderData(profileRows = profiles, projectRows = projects) {
-      document.getElementById('talentList').innerHTML = profileRows.length ? profileRows.map(p => card(p.name, p.role, p.bio, p.skills, p.contact, `Connect: ${p.contact}`, 'text-indigo-600')).join('') : '<p class="text-slate-500">No profiles yet.</p>';
-      document.getElementById('projectList').innerHTML = projectRows.length ? projectRows.map(p => card(p.title, 'Open opportunity', p.desc, p.skills, p.contact, 'Apply / Contact Lead', 'text-emerald-600')).join('') : '<p class="text-slate-500">No projects yet.</p>';
+      const talentList = document.getElementById("talentList");
+      const projectList = document.getElementById("projectList");
+
+      talentList.innerHTML = profileRows.length
+        ? profileRows.map(profile =>
+            createCard(
+              profile.name,
+              profile.role,
+              profile.bio,
+              profile.skills,
+              profile.contact,
+              `Connect: ${profile.contact}`,
+              "text-indigo-600"
+            )
+          ).join("")
+        : '<p style="margin:0;padding:24px;border:1px dashed #475569;border-radius:14px;color:#94a3b8;">No profiles yet. Be the first to create one ✦</p>';
+
+      projectList.innerHTML = projectRows.length
+        ? projectRows.map(project =>
+            createCard(
+              project.title,
+              "Open opportunity",
+              project.desc,
+              project.skills,
+              project.contact,
+              "Apply / Contact Lead",
+              "text-emerald-600"
+            )
+          ).join("")
+        : '<p style="margin:0;padding:24px;border:1px dashed #475569;border-radius:14px;color:#94a3b8;">No projects yet. Share an opportunity 🚀</p>';
     }
 
     async function loadData() {
-      const [profileResponse, projectResponse] = await Promise.all([fetch('/api/profiles'), fetch('/api/projects')]);
+      const [profileResponse, projectResponse] = await Promise.all([
+        fetch("/api/profiles"),
+        fetch("/api/projects")
+      ]);
+
       profiles = await profileResponse.json();
       projects = await projectResponse.json();
+
       renderData();
     }
 
     async function saveProfile(event) {
       event.preventDefault();
-      const data = { name: pName.value, role: pRole.value, skills: pSkills.value.split(',').map(s => s.trim()).filter(Boolean), contact: pContact.value, bio: pBio.value };
-      const response = await fetch('/api/profiles', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      if (!response.ok) return alert((await response.json()).error);
-      event.target.reset(); closeModal('profileModal'); await loadData();
+
+      const data = {
+        name: document.getElementById("pName").value,
+        role: document.getElementById("pRole").value,
+        skills: document.getElementById("pSkills").value
+          .split(",")
+          .map(skill => skill.trim())
+          .filter(Boolean),
+        contact: document.getElementById("pContact").value,
+        bio: document.getElementById("pBio").value
+      };
+
+      const response = await fetch("/api/profiles", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) {
+        return alert((await response.json()).error);
+      }
+
+      event.target.reset();
+      closeModal("profileModal");
+      await loadData();
     }
 
     async function saveProject(event) {
       event.preventDefault();
-      const data = { title: pjTitle.value, skills: pjSkills.value.split(',').map(s => s.trim()).filter(Boolean), contact: pjContact.value, desc: pjDesc.value };
-      const response = await fetch('/api/projects', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      if (!response.ok) return alert((await response.json()).error);
-      event.target.reset(); closeModal('projectModal'); await loadData();
+
+      const data = {
+        title: document.getElementById("pjTitle").value,
+        skills: document.getElementById("pjSkills").value
+          .split(",")
+          .map(skill => skill.trim())
+          .filter(Boolean),
+        contact: document.getElementById("pjContact").value,
+        desc: document.getElementById("pjDesc").value
+      };
+
+      const response = await fetch("/api/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (!response.ok) {
+        return alert((await response.json()).error);
+      }
+
+      event.target.reset();
+      closeModal("projectModal");
+      await loadData();
     }
 
-    function filterData() {
-      const query = searchInput.value.toLowerCase();
-      renderData(profiles.filter(p => [p.name, p.role, ...p.skills].some(value => value.toLowerCase().includes(query))), projects.filter(p => [p.title, ...p.skills].some(value => value.toLowerCase().includes(query))));
+    function switchTab(tab) {
+      document.getElementById("talentsSection").style.display =
+        tab === "talents" ? "block" : "none";
+
+      document.getElementById("projectsSection").style.display =
+        tab === "projects" ? "block" : "none";
     }
-    function switchTab(tab) { talentsSection.classList.toggle('hidden', tab !== 'talents'); projectsSection.classList.toggle('hidden', tab !== 'projects'); }
-    function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
-    function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
-    loadData().catch(() => alert('Could not connect to the local server. Run npm start first.'));
+
+    function openModal(id) {
+      document.getElementById(id).style.display = "flex";
+    }
+
+    function closeModal(id) {
+      document.getElementById(id).style.display = "none";
+    }
+
+    async function logout() {
+      await fetch("/api/logout", {
+        method: "POST"
+      });
+
+      window.location.href = "/login";
+    }
+
+    loadData().catch(() => {
+      alert("Could not connect to the server. Run npm start first.");
+    });
   </script>
 </body>
 </html>

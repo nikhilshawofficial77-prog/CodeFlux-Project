@@ -4,128 +4,149 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sign in | SkillSync</title>
-  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-violet-100 text-slate-800">
-  <main class="grid min-h-screen place-items-center p-5">
-    <section class="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl ring-1 ring-slate-200">
-      <p class="mb-2 text-center text-sm font-bold tracking-widest text-indigo-600">
-        SKILLSYNC @ LPU
-      </p>
+<body style="margin:0;min-height:100vh;background:#f8fafc;color:#1e293b;font-family:Arial,Helvetica,sans-serif;">
+  <div style="height:6px;background:#4f46e5;"></div>
 
-      <h1 id="heading" class="text-center text-3xl font-bold">
-        Welcome back
-      </h1>
+  <main style="min-height:calc(100vh - 6px);padding:42px 16px 28px;text-align:center;box-sizing:border-box;">
+    <div style="display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border:1px solid #c7d2fe;border-radius:20px;background:#eef2ff;color:#4338ca;font-size:11px;font-weight:bold;letter-spacing:1.3px;">
+      SKILLS • CONNECTIONS • OPPORTUNITIES
+    </div>
 
-      <p id="description" class="mt-2 text-center text-sm text-slate-500">
-        Sign in to access the SkillSync community.
-      </p>
+    <h1 style="margin:16px 0 0;color:#1e293b;font-family:'Courier New',Courier,monospace;font-size:54px;letter-spacing:1px;">
+      Skill<span style="color:#4f46e5;">Sync</span>
+    </h1>
 
-      <form id="authForm" class="mt-7 space-y-4">
-        <div>
-          <label for="username" class="mb-1 block text-sm font-medium">
-            Username
-          </label>
-          <input
-            id="username"
-            required
-            minlength="3"
-            maxlength="30"
-            autocomplete="username"
-            placeholder="Your username"
-            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-        </div>
+    <p style="margin:10px 0 0;color:#64748b;font-size:15px;">
+      Connect your skills. Discover opportunities.
+    </p>
 
-        <div>
-          <label for="password" class="mb-1 block text-sm font-medium">
-            Password
-          </label>
-          <input
-            id="password"
-            type="password"
-            required
-            minlength="8"
-            autocomplete="current-password"
-            placeholder="At least 8 characters"
-            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500"
-          >
-        </div>
+    <div style="width:72px;height:4px;margin:20px auto 0;border-radius:5px;background:#4f46e5;"></div>
 
-        <p id="message" class="min-h-5 text-sm text-rose-600"></p>
+    <form id="authForm" style="width:390px;max-width:100%;margin:28px auto 0;padding:30px;background:#ffffff;border:1px solid #e2e8f0;border-radius:20px;box-shadow:0 12px 30px rgba(15,23,42,.12);text-align:left;box-sizing:border-box;">
+      <div style="text-align:center;margin-bottom:25px;">
 
-        <button
-          id="submit"
-          class="w-full rounded-lg bg-indigo-600 px-4 py-3 font-semibold text-white hover:bg-indigo-700"
-        >
+
+        <h2 id="heading" style="margin:13px 0 6px;color:#1e293b;font-family:Georgia,'Times New Roman',serif;font-size:27px;">
+          Welcome back
+        </h2>
+
+        <p id="description" style="margin:0;color:#64748b;font-size:14px;line-height:1.5;">
+          Sign in to access the SkillSync community.
+        </p>
+      </div>
+
+      <label for="username" style="display:block;margin-bottom:8px;color:#334155;font-size:13px;font-weight:bold;">
+        USERNAME
+      </label>
+
+      <input id="username" type="text" required minlength="3" maxlength="30" autocomplete="username" placeholder="Enter username"
+        style="box-sizing:border-box;width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#ffffff;color:#1e293b;font-size:15px;outline:none;transition:.2s;"
+        onfocus="this.style.borderColor='#4f46e5';this.style.boxShadow='0 0 0 3px rgba(79,70,229,.14)'"
+        onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none'">
+
+      <label for="password" style="display:block;margin-top:20px;margin-bottom:8px;color:#334155;font-size:13px;font-weight:bold;">
+        PASSWORD
+      </label>
+
+      <input id="password" type="password" required minlength="8" autocomplete="current-password" placeholder="At least 8 characters"
+        style="box-sizing:border-box;width:100%;padding:12px 13px;border:1px solid #cbd5e1;border-radius:10px;background:#ffffff;color:#1e293b;font-size:15px;outline:none;transition:.2s;"
+        onfocus="this.style.borderColor='#4f46e5';this.style.boxShadow='0 0 0 3px rgba(79,70,229,.14)'"
+        onblur="this.style.borderColor='#cbd5e1';this.style.boxShadow='none'">
+
+      <p id="message" style="min-height:20px;margin:14px 0 0;text-align:center;color:#dc2626;font-size:14px;font-weight:bold;"></p>
+
+      <div style="margin-top:9px;text-align:center;">
+        <button id="submit" type="submit"
+          style="min-width:175px;padding:12px 24px;border:none;border-radius:24px;background:#4f46e5;color:#ffffff;font-size:15px;font-weight:bold;cursor:pointer;box-shadow:0 5px 12px rgba(79,70,229,.27);transition:.2s;"
+          onmouseover="this.style.background='#4338ca';this.style.transform='translateY(-2px)'"
+          onmouseout="this.style.background='#4f46e5';this.style.transform='translateY(0)'">
           Sign in
         </button>
-      </form>
+      </div>
 
-      <p class="mt-6 text-center text-sm text-slate-500">
-        <span id="switchText">New to SkillSync?</span>
-        <button id="switchMode" class="font-semibold text-indigo-600 hover:underline">
+      <div style="margin-top:25px;padding-top:20px;border-top:1px solid #e2e8f0;text-align:center;">
+        <span id="switchText" style="color:#64748b;font-size:14px;">New to SkillSync?</span>
+        <br>
+
+        <button id="switchMode" type="button"
+          style="margin-top:11px;padding:9px 17px;border:1px solid #4f46e5;border-radius:20px;background:#ffffff;color:#4f46e5;font-size:12px;font-weight:bold;cursor:pointer;transition:.2s;"
+          onmouseover="this.style.background='#4f46e5';this.style.color='white'"
+          onmouseout="this.style.background='#ffffff';this.style.color='#4f46e5'">
           Create an account
         </button>
-      </p>
-    </section>
+      </div>
+    </form>
+
+    <p style="margin:25px 0 0;color:#94a3b8;font-size:12px;">
+      © 2026 SkillSync. All rights reserved.
+    </p>
   </main>
 
   <script>
-    const form = document.querySelector('#authForm');
-    const username = document.querySelector('#username');
-    const password = document.querySelector('#password');
-    const heading = document.querySelector('#heading');
-    const description = document.querySelector('#description');
-    const submit = document.querySelector('#submit');
-    const message = document.querySelector('#message');
-    const switchText = document.querySelector('#switchText');
-    const switchMode = document.querySelector('#switchMode');
+    const form = document.querySelector("#authForm");
+    const username = document.querySelector("#username");
+    const password = document.querySelector("#password");
 
-    let mode = 'login';
+    const heading = document.querySelector("#heading");
+    const description = document.querySelector("#description");
+
+    const submit = document.querySelector("#submit");
+    const message = document.querySelector("#message");
+
+    const switchText = document.querySelector("#switchText");
+    const switchMode = document.querySelector("#switchMode");
+
+    let mode = "login";
 
     function setMode(next) {
       mode = next;
-      const signup = mode === 'signup';
 
-      message.textContent = '';
-      heading.textContent = signup ? 'Create your account' : 'Welcome back';
+      const signup = mode === "signup";
+
+      message.textContent = "";
+
+      heading.textContent = signup
+        ? "Create your account"
+        : "Welcome back";
 
       description.textContent = signup
-        ? 'Join the SkillSync community in a few seconds.'
-        : 'Sign in to access the SkillSync community.';
+        ? "Join the SkillSync community in a few seconds."
+        : "Sign in to access the SkillSync community.";
 
-      submit.textContent = signup ? 'Create account' : 'Sign in';
+      submit.textContent = signup
+        ? "Create account"
+        : "Sign in";
 
       switchText.textContent = signup
-        ? 'Already have an account?'
-        : 'New to SkillSync?';
+        ? "Already have an account?"
+        : "New to SkillSync?";
 
       switchMode.textContent = signup
-        ? 'Sign in instead'
-        : 'Create an account';
+        ? "Sign in instead"
+        : "Create an account";
 
       password.autocomplete = signup
-        ? 'new-password'
-        : 'current-password';
+        ? "new-password"
+        : "current-password";
     }
 
     switchMode.onclick = () => {
-      setMode(mode === 'login' ? 'signup' : 'login');
+      setMode(mode === "login" ? "signup" : "login");
     };
 
     form.onsubmit = async event => {
       event.preventDefault();
 
-      message.textContent = '';
+      message.textContent = "";
       submit.disabled = true;
 
       try {
         const response = await fetch(`/api/${mode}`, {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json'
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             username: username.value.trim(),
@@ -136,10 +157,10 @@
         const data = await response.json();
 
         if (!response.ok) {
-          throw new Error(data.error || 'Please try again.');
+          throw new Error(data.error || "Please try again.");
         }
 
-        location.assign('/app');
+        location.assign("/app");
       } catch (error) {
         message.textContent = error.message;
       } finally {
