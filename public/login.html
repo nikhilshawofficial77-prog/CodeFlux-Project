@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in | SkillSync</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-violet-100 text-slate-800">
+  <main class="grid min-h-screen place-items-center p-5">
+    <section class="w-full max-w-md rounded-2xl bg-white p-8 shadow-xl ring-1 ring-slate-200">
+      <p class="mb-2 text-center text-sm font-bold tracking-widest text-indigo-600">
+        SKILLSYNC @ LPU
+      </p>
+
+      <h1 id="heading" class="text-center text-3xl font-bold">
+        Welcome back
+      </h1>
+
+      <p id="description" class="mt-2 text-center text-sm text-slate-500">
+        Sign in to access the SkillSync community.
+      </p>
+
+      <form id="authForm" class="mt-7 space-y-4">
+        <div>
+          <label for="username" class="mb-1 block text-sm font-medium">
+            Username
+          </label>
+          <input
+            id="username"
+            required
+            minlength="3"
+            maxlength="30"
+            autocomplete="username"
+            placeholder="Your username"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+        </div>
+
+        <div>
+          <label for="password" class="mb-1 block text-sm font-medium">
+            Password
+          </label>
+          <input
+            id="password"
+            type="password"
+            required
+            minlength="8"
+            autocomplete="current-password"
+            placeholder="At least 8 characters"
+            class="w-full rounded-lg border border-slate-300 px-3 py-2.5 outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+        </div>
+
+        <p id="message" class="min-h-5 text-sm text-rose-600"></p>
+
+        <button
+          id="submit"
+          class="w-full rounded-lg bg-indigo-600 px-4 py-3 font-semibold text-white hover:bg-indigo-700"
+        >
+          Sign in
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-sm text-slate-500">
+        <span id="switchText">New to SkillSync?</span>
+        <button id="switchMode" class="font-semibold text-indigo-600 hover:underline">
+          Create an account
+        </button>
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const form = document.querySelector('#authForm');
+    const username = document.querySelector('#username');
+    const password = document.querySelector('#password');
+    const heading = document.querySelector('#heading');
+    const description = document.querySelector('#description');
+    const submit = document.querySelector('#submit');
+    const message = document.querySelector('#message');
+    const switchText = document.querySelector('#switchText');
+    const switchMode = document.querySelector('#switchMode');
+
+    let mode = 'login';
+
+    function setMode(next) {
+      mode = next;
+      const signup = mode === 'signup';
+
+      message.textContent = '';
+      heading.textContent = signup ? 'Create your account' : 'Welcome back';
+
+      description.textContent = signup
+        ? 'Join the SkillSync community in a few seconds.'
+        : 'Sign in to access the SkillSync community.';
+
+      submit.textContent = signup ? 'Create account' : 'Sign in';
+
+      switchText.textContent = signup
+        ? 'Already have an account?'
+        : 'New to SkillSync?';
+
+      switchMode.textContent = signup
+        ? 'Sign in instead'
+        : 'Create an account';
+
+      password.autocomplete = signup
+        ? 'new-password'
+        : 'current-password';
+    }
+
+    switchMode.onclick = () => {
+      setMode(mode === 'login' ? 'signup' : 'login');
+    };
+
+    form.onsubmit = async event => {
+      event.preventDefault();
+
+      message.textContent = '';
+      submit.disabled = true;
+
+      try {
+        const response = await fetch(`/api/${mode}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: username.value.trim(),
+            password: password.value
+          })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Please try again.');
+        }
+
+        location.assign('/app');
+      } catch (error) {
+        message.textContent = error.message;
+      } finally {
+        submit.disabled = false;
+      }
+    };
+  </script>
+</body>
+</html>
